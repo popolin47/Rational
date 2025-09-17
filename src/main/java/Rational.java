@@ -1,4 +1,4 @@
-class Rational { 
+class Rational {
     long numerator,denominator; 
 
     class Illegal extends Exception { 
@@ -60,6 +60,9 @@ class Rational {
      */
     public void subtract(Rational x) {
         // to be completed
+        numerator = (numerator * x.denominator) - (x.numerator * denominator);
+        denominator = (denominator * x.denominator);
+        simplestForm();
     }
 
     /***
@@ -68,6 +71,9 @@ class Rational {
      */
     public void multiply(Rational x) { 
         // to be completed
+        numerator = numerator * x.numerator;
+        denominator = denominator * x.denominator;
+        simplestForm();
     }
 
     /***
@@ -76,6 +82,9 @@ class Rational {
      */
     public void divide(Rational x) {
         // to be completed
+        this.numerator = this.numerator * x.denominator;
+        this.denominator = this.denominator * x.numerator;
+        simplestForm();
     }
 
     /***
@@ -84,8 +93,12 @@ class Rational {
      * @return true if the given rational number equals to the current, false otherwise
      */
     public boolean equals(Object x) {
-        // to be completed
-        return true; // TODO: This needs to be modified.
+        if (this == x) return true;
+        if (!(x instanceof Rational)) return false;
+
+        Rational other = (Rational) x;
+        return this.numerator * other.denominator == this.denominator * other.numerator;
+
     }
 
     /***
@@ -95,17 +108,23 @@ class Rational {
      * rational number is larger than the given number
      */
     public long compareTo(Object x) {
-        // to be completed
-        return -1; // TODO: this needs to be modified.
+        Rational other = (Rational) x;
+        long lhs = (long) this.numerator * other.denominator;
+        long rhs = (long) other.numerator * this.denominator;
+
+        return Long.compare(lhs, rhs);
     }
 
     /***
      * Give the formatted string of the rational number
      * @return the string representation of the rational number. For example, "1/2", "3/4".
      */
-    public String toString() { 
+    public String toString() {
         // to be completed
-        return ""; // TODO: This needs to be modified.
+        if (denominator == 1) {
+            return String.valueOf(numerator);
+        }
+        return numerator + "/" + denominator;
     }
 
     public static void main(String[] args) {
